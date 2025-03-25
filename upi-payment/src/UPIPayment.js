@@ -10,14 +10,14 @@ const UPIPayment = () => {
   const [paymentSuccess, setPaymentSuccess] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
 
-  // Function to speak the amount credited
+ 
   const speakAmount = (amount) => {
     if ('speechSynthesis' in window) {
       const message = new SpeechSynthesisUtterance(`${amount} rupees has been credited to your account`);
       message.lang = 'en-IN';
       
-      // Optional: Adjust voice properties
-      message.rate = 0.9; // Slightly slower rate
+      
+      message.rate = 0.9; 
       message.pitch = 1;
       message.volume = 1;
       
@@ -52,7 +52,7 @@ const UPIPayment = () => {
           window.location.href = response.data.upiLink;
         }
 
-        // Poll for payment status
+      
         setTimeout(checkPaymentStatus, 5000);
       } else {
         setIsProcessing(false);
@@ -73,19 +73,19 @@ const UPIPayment = () => {
 
       if (response.data.status === "completed") {
         setPaymentSuccess(true);
-        setUpiLink(""); // Hide QR code
+        setUpiLink(""); 
         setIsProcessing(false);
         
-        // Speak the amount that was credited
+        
         speakAmount(amount);
         
-        alert("Payment Successful!"); // Show popup
+        alert("Payment Successful!");
       } else if (response.data.status === "failed") {
         setIsProcessing(false);
         alert("Payment failed. Please try again.");
       } else {
-        // Still pending, check again
-        setTimeout(checkPaymentStatus, 3000); // Check again after 3s
+        
+        setTimeout(checkPaymentStatus, 3000); 
       }
     } catch (error) {
       console.error("Error checking payment status:", error);
@@ -93,7 +93,7 @@ const UPIPayment = () => {
     }
   };
 
-  // Function to manually update payment status (for testing)
+  
   const simulateSuccessfulPayment = async () => {
     try {
       if (!transactionId) return;
@@ -103,7 +103,7 @@ const UPIPayment = () => {
         status: "success"
       });
       
-      // Force check status immediately
+     
       checkPaymentStatus();
     } catch (error) {
       console.error("Error simulating payment:", error);
